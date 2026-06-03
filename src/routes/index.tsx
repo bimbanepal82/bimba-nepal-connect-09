@@ -3,6 +3,7 @@ import heroImg from "@/assets/hero-bimba.jpg";
 import eduImg from "@/assets/program-education.jpg";
 import womenImg from "@/assets/program-women.jpg";
 import communityImg from "@/assets/program-community.jpg";
+import logoAsset from "@/assets/bimba-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,9 +56,8 @@ function Header() {
   return (
     <header className="absolute top-0 left-0 right-0 z-20">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-        <a href="#" className="flex items-center gap-2 text-background">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground font-serif text-lg font-bold">B</span>
-          <span className="font-serif text-xl font-semibold tracking-tight">Bimba Nepal</span>
+        <a href="#" aria-label="Bimba Nepal home" className="flex items-center">
+          <img src={logoAsset.url} alt="Bimba Nepal" className="h-10 w-auto rounded-md bg-background/90 px-2 py-1 backdrop-blur" />
         </a>
         <ul className="hidden items-center gap-8 text-sm text-background/90 md:flex">
           <li><a href="#mission" className="transition hover:text-background">Mission</a></li>
@@ -301,9 +301,8 @@ function Footer() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-10 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-primary-foreground font-serif text-sm font-bold">B</span>
-          <span className="font-serif text-lg font-semibold">Bimba Nepal</span>
+        <div className="flex items-center">
+          <img src={logoAsset.url} alt="Bimba Nepal" className="h-9 w-auto" />
         </div>
         <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} Bimba Nepal • Kathmandu, Nepal • Registered NGO
