@@ -1,0 +1,21 @@
+{
+  "name": "bimba-nepal-workspace",
+  "version": "1.0.0",
+  "description": "BIMBA Nepal - Unified workspace for all projects",
+  "private": true,
+  "workspaces": [
+    "apps/bimanepal",
+    "apps/bimba-nepal-connect"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "preview": "npm run preview --workspaces",
+    "lint": "npm run lint --workspaces",
+    "format": "npm run format --workspaces",
+    "clean": "rm -rf node_modules && npm run clean --workspaces"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
