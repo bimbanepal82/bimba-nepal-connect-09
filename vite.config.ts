@@ -16,16 +16,4 @@ export default defineConfig({
     // GitHub Pages base path configuration
     base: process.env.GITHUB_PAGES === 'true' ? '/bimba-nepal-connect-09/' : '/',
   },
-  nitro: {
-    // Cloudflare Workers configuration
-    prerender: {
-      crawlLinks: true,
-      routes: ['/sitemap.xml', '/robots.txt'],
-    },
-    storage: {
-      kv: {
-        driver: 'cloudflareKV',
-      },
-    },
-  },
 });
