@@ -12,4 +12,20 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // GitHub Pages base path configuration
+    base: process.env.GITHUB_PAGES === 'true' ? '/bimba-nepal-connect-09/' : '/',
+  },
+  nitro: {
+    // Cloudflare Workers configuration
+    prerender: {
+      crawlLinks: true,
+      routes: ['/sitemap.xml', '/robots.txt'],
+    },
+    storage: {
+      kv: {
+        driver: 'cloudflareKV',
+      },
+    },
+  },
 });
