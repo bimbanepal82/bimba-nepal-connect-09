@@ -279,16 +279,24 @@ function CTA() {
           </div>
           <div id="contact" className="flex flex-col gap-3 md:items-end">
             <a
-              href="mailto:hello@bimbanepal.org"
+              href="mailto:mail@bimba.org.np"
               className="inline-flex items-center justify-center rounded-full bg-background px-7 py-3.5 text-sm font-medium text-foreground shadow-[var(--shadow-soft)] transition hover:opacity-90"
             >
               Donate now
             </a>
             <a
-              href="mailto:hello@bimbanepal.org"
+              href="mailto:mail@bimba.org.np"
               className="inline-flex items-center justify-center rounded-full border border-background/40 px-7 py-3.5 text-sm font-medium text-primary-foreground transition hover:bg-background/10"
             >
-              hello@bimbanepal.org
+              mail@bimba.org.np
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61590730554027"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full border border-background/40 px-7 py-3.5 text-sm font-medium text-primary-foreground transition hover:bg-background/10"
+            >
+              Facebook — BIMBA NEPAL
             </a>
           </div>
         </div>
