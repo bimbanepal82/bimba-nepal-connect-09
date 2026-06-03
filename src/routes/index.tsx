@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/hero-bimba.jpg";
-import eduImg from "@/assets/program-education.jpg";
+import geriatricImg from "@/assets/program-geriatric.jpg";
 import womenImg from "@/assets/program-women.jpg";
-import communityImg from "@/assets/program-community.jpg";
+import diagnosticImg from "@/assets/program-diagnostic.jpg";
+import mentalImg from "@/assets/program-mental.jpg";
+import legalImg from "@/assets/program-legal.jpg";
 import logoAsset from "@/assets/bimba-logo.png.asset.json";
 import donationQrAsset from "@/assets/bimba-donation-qr.jpeg.asset.json";
 
@@ -200,32 +202,32 @@ const focusAreas = [
   {
     title: "Geriatric Health & Healthy Aging",
     body: "Awareness, screening, and education on chronic disease prevention, mobility, dementia and cognitive health, caregiver support, and social engagement for senior citizens.",
-    img: communityImg,
-    alt: "Older community members in conversation",
+    img: geriatricImg,
+    alt: "Older Nepali community members sitting together in conversation",
   },
   {
     title: "Women's Health & Gynecology",
     body: "Reproductive and menstrual health education, maternal health awareness, preventive gynecological screening, consultations, and community programs.",
     img: womenImg,
-    alt: "Nepali women in a community workshop",
+    alt: "Nepali women gathered in a community health awareness session",
   },
   {
     title: "Radiology & Diagnostic Health",
     body: "Community screening programs, diagnostic awareness, early-detection initiatives, and clear referral pathways for further evaluation.",
-    img: eduImg,
-    alt: "Health worker engaging with a community member",
+    img: diagnosticImg,
+    alt: "Clinician conducting a health check at a community screening camp",
   },
   {
     title: "Mental Health & Community Well-Being",
     body: "Mental health literacy, stigma reduction, emotional well-being promotion, stress and resilience awareness, and referrals to qualified professionals.",
-    img: communityImg,
-    alt: "Quiet Himalayan landscape representing well-being",
+    img: mentalImg,
+    alt: "Counsellor listening attentively to a community member in soft daylight",
   },
   {
     title: "Medical-Legal Information & Referral",
     body: "A neutral first point of contact offering medical-legal information, resource navigation, and referrals — for patients, families, and healthcare professionals.",
-    img: eduImg,
-    alt: "People reviewing information together",
+    img: legalImg,
+    alt: "Two professionals reviewing documents together at a desk",
   },
 ];
 
