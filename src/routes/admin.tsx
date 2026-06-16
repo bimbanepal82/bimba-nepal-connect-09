@@ -37,8 +37,9 @@ import {
   loadDocuments,
   updateDocument,
 } from "@/lib/document-storage";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Download, Eye, Loader2, PlusCircle, Trash2, LogOut, ArrowLeft, KeyRound } from "lucide-react";
+import { getSession, logout } from "@/utils/auth.server";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
+import { Download, Eye, Loader2, PlusCircle, Trash2, LogOut, ArrowLeft } from "lucide-react";
 import { useEffect, useMemo, useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "sonner";
 
@@ -46,6 +47,13 @@ const categories: DocumentType[] = ["Notice", "Report", "Newsletter"];
 const pageSize = 6;
 
 export const Route = createFileRoute("/admin")({
+  beforeLoad: async () => {
+    const session = await getSession();
+    if (!session?.user) {
+      throw redirect({ to: "/login" });
+    }
+    return { session };
+  },
   head: () => ({
     meta: [
       { title: "Admin Portal | Bimba Nepal" },
@@ -59,10 +67,8 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminRoute() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loginUsername, setLoginUsername] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
+  const { session } = Route.useRouteContext();
+  const navigate = useNavigate();
 
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<DocumentType>("Notice");
@@ -86,24 +92,24 @@ function AdminRoute() {
   });
 
   // Check authentication on component mount
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const authenticated = window.localStorage.getItem("bimba_admin_authenticated");
-      if (authenticated === "true") {
-        setIsAuthenticated(true);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const authenticated = window.localStorage.getItem("bimba_admin_authenticated");
+  //     if (authenticated === "true") {
+  //       setIsAuthenticated(true);
+  //     }
+  //   }
+  // }, []);
 
   // Load documents if authenticated
   useEffect(() => {
-    if (isAuthenticated) {
+    if (session?.user) {
       setLoading(true);
       const loaded = loadDocuments();
       setDocuments(loaded);
       setLoading(false);
     }
-  }, [isAuthenticated]);
+  }, [session?.user]);
 
   useEffect(() => {
     setPage(1);
@@ -135,22 +141,10 @@ function AdminRoute() {
     ? (documents.find((document) => document.id === activeDocumentId) ?? null)
     : null;
 
-  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (loginUsername === "admin" && loginPassword === "admin") {
-      setIsAuthenticated(true);
-      window.localStorage.setItem("bimba_admin_authenticated", "true");
-      setLoginError("");
-    } else {
-      setLoginError("Invalid username or password. Please try again.");
-    }
-  };
-
   const handleLogout = () => {
-    setIsAuthenticated(false);
     window.localStorage.removeItem("bimba_admin_authenticated");
-    setLoginUsername("");
-    setLoginPassword("");
+    logout();
+    navigate({ to: "/login" });
   };
 
   const resetForm = () => {
@@ -291,77 +285,20 @@ function AdminRoute() {
     );
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-6 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background">
-        <div className="w-full max-w-md space-y-6">
-          <div className="flex flex-col items-center space-y-2 text-center">
-            <Link to="/" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition mb-4">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Bimba Nepal
-            </Link>
-            <div className="p-3 rounded-full bg-primary/10 text-primary mb-2">
-              <KeyRound className="h-6 w-6" />
-            </div>
-            <h1 className="text-3xl font-serif font-semibold tracking-tight">Admin Portal</h1>
-            <p className="text-sm text-muted-foreground">
-              Log in to manage notices, reports, and newsletters
-            </p>
-          </div>
-
-          <Card className="border-border bg-card/70 backdrop-blur-md shadow-lg">
-            <form onSubmit={handleLogin}>
-              <CardContent className="space-y-4 pt-6">
-                {loginError && (
-                  <div className="rounded-lg bg-destructive/10 p-3 text-xs font-medium text-destructive">
-                    {loginError}
-                  </div>
-                )}
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    type="text"
-                    value={loginUsername}
-                    onChange={(e) => setLoginUsername(e.target.value)}
-                    placeholder="Enter admin username"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    placeholder="Enter password"
-                    required
-                  />
-                </div>
-              </CardContent>
-              <CardFooter className="flex flex-col gap-4">
-                <Button type="submit" className="w-full">
-                  Login as Administrator
-                </Button>
-                <p className="text-center text-[10px] text-muted-foreground/60 leading-relaxed">
-                  Bimba Nepal Admin Portal • Secure Local Session
-                </p>
-              </CardFooter>
-            </form>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header bar for authenticated admins */}
+      {/* Header 
+           bar for authenti
+           cated admi
+           ns */}
+
       <header className="border-b border-border bg-card/85 backdrop-blur sticky top-0 z-10">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-4">
-            <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-1.5">
+            <Link
+              to="/"
+              className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-1.5"
+            >
               <ArrowLeft className="h-4 w-4" /> Home
             </Link>
             <span className="text-border">|</span>
@@ -369,7 +306,12 @@ function AdminRoute() {
               Admin Control Panel
             </span>
           </div>
-          <Button variant="ghost" size="sm" onClick={handleLogout} className="text-muted-foreground hover:text-foreground">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="text-muted-foreground hover:text-foreground"
+          >
             <LogOut className="mr-2 h-4 w-4" /> Logout
           </Button>
         </div>
@@ -400,7 +342,9 @@ function AdminRoute() {
 
             <Card className="border-border bg-card">
               <CardHeader>
-                <CardTitle>{formState.id ? "Update Document" : "Upload / Publish Document"}</CardTitle>
+                <CardTitle>
+                  {formState.id ? "Update Document" : "Upload / Publish Document"}
+                </CardTitle>
                 <CardDescription>
                   Add a title, description, type, and file then publish instantly.
                 </CardDescription>
