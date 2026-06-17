@@ -8,8 +8,15 @@ import mentalImg from "@/assets/program-mental.jpg";
 import womenImg from "@/assets/program-women.jpg";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useMemo } from "react";
-import { loadDocuments, DocumentRecord, DocumentType, isPreviewSupported } from "@/lib/document-storage";
-import { FileText, Download, Search, Eye, Calendar, X } from "lucide-react";
+import {
+  loadDocuments,
+  DocumentRecord,
+  DocumentType,
+  isPreviewSupported,
+} from "@/lib/document-storage";
+import { FileText, Download, Search, Eye, Calendar, X, ShieldCheck } from "lucide-react";
+import { getSession } from "@/utils/auth.server";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -66,10 +73,16 @@ function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsAdmin(window.localStorage.getItem("bimba_admin_authenticated") === "true");
-    }
+    getSession().then((session) => setIsAdmin(Boolean(session?.user)));
   }, []);
+
+  const navLinks = [
+    { href: "#about", label: "About" },
+    { href: "#focus", label: "Focus Areas" },
+    { href: "#pilot", label: "Pilot Initiative" },
+    { href: "#notices", label: "Notices" },
+    { href: "#contact", label: "Contact" },
+  ];
 
   return (
     <header className="absolute top-0 left-0 right-0 z-20">
@@ -81,46 +94,35 @@ function Header() {
             className="h-10 w-auto rounded-md bg-background/90 px-2 py-1 backdrop-blur"
           />
         </a>
+
         <ul className="hidden items-center gap-8 text-sm text-background/90 md:flex">
-          <li>
-            <a href="#about" className="transition hover:text-background">
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#focus" className="transition hover:text-background">
-              Focus Areas
-            </a>
-          </li>
-          <li>
-            <a href="#pilot" className="transition hover:text-background">
-              Pilot Initiative
-            </a>
-          </li>
-          <li>
-            <a href="#notices" className="transition hover:text-background">
-              Notices
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="transition hover:text-background">
-              Contact
-            </a>
-          </li>
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <Link to={link.href} className="transition hover:text-primary transform">
+                {link.label}
+              </Link>
+            </li>
+          ))}
+
           {isAdmin && (
             <li>
-              <Link to="/admin" className="transition hover:text-background font-medium text-emerald-300">
-                Admin Panel
+              <Link
+                to="/admin"
+                className="group relative inline-flex items-center gap-1 overflow-hidden rounded-full border border-primary/40 bg-primary/40 px-2 py-1 text-white backdrop-blur transition-all duration-300 hover:border-primary/70 hover:bg-primary/50 hover:text-white"
+              >
+                <ShieldCheck className="size-3.5" />
+                <span>Admin</span>
               </Link>
             </li>
           )}
         </ul>
-        <a
-          href="#donate"
+
+        <Button
+          asChild
           className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-warm)] transition hover:opacity-90"
         >
-          Donate
-        </a>
+          <a href="#donate">Donate</a>
+        </Button>
       </nav>
     </header>
   );
@@ -616,7 +618,8 @@ function NoticesSection() {
             Notice Board & Document Library
           </h2>
           <p className="mt-4 text-muted-foreground text-lg">
-            Access Bimba Nepal's official notices, project reports, announcements, and newsletter updates.
+            Access Bimba Nepal's official notices, project reports, announcements, and newsletter
+            updates.
           </p>
         </div>
 
@@ -667,7 +670,8 @@ function NoticesSection() {
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredDocuments.map((doc) => {
             // Pick a color for category badges
-            let badgeStyle = "bg-orange-500/10 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400";
+            let badgeStyle =
+              "bg-orange-500/10 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400";
             if (doc.type === "Report") {
               badgeStyle = "bg-teal-500/10 text-teal-600 dark:bg-teal-500/20 dark:text-teal-400";
             } else if (doc.type === "Newsletter") {
@@ -681,7 +685,9 @@ function NoticesSection() {
               >
                 <div>
                   <div className="flex items-center justify-between gap-4">
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider ${badgeStyle}`}>
+                    <span
+                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider ${badgeStyle}`}
+                    >
                       {doc.type}
                     </span>
                     <span className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -698,7 +704,10 @@ function NoticesSection() {
                 </div>
 
                 <div className="mt-6 border-t border-border/60 pt-4 flex items-center justify-between gap-4">
-                  <span className="truncate text-xs text-muted-foreground max-w-[120px]" title={doc.fileName}>
+                  <span
+                    className="truncate text-xs text-muted-foreground max-w-[120px]"
+                    title={doc.fileName}
+                  >
                     {doc.fileName}
                   </span>
                   <div className="flex gap-2 shrink-0">
@@ -751,7 +760,7 @@ function NoticesSection() {
                 <X className="h-5 w-5" />
               </button>
             </div>
-            
+
             <div className="flex-1 min-h-[50vh] mt-4 flex items-center justify-center overflow-auto rounded-xl bg-muted p-2">
               {previewDoc.fileType.startsWith("image/") ? (
                 <img
