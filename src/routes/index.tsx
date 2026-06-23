@@ -70,12 +70,6 @@ function Index() {
 }
 
 function Header() {
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    getSession().then((session) => setIsAdmin(Boolean(session?.user)));
-  }, []);
-
   const navLinks = [
     { href: "#about", label: "About" },
     { href: "#focus", label: "Focus Areas" },
@@ -103,18 +97,6 @@ function Header() {
               </Link>
             </li>
           ))}
-
-          {isAdmin && (
-            <li>
-              <Link
-                to="/admin"
-                className="group relative inline-flex items-center gap-1 overflow-hidden rounded-full border border-primary/40 bg-primary/40 px-2 py-1 text-white backdrop-blur transition-all duration-300 hover:border-primary/70 hover:bg-primary/50 hover:text-white"
-              >
-                <ShieldCheck className="size-3.5" />
-                <span>Admin</span>
-              </Link>
-            </li>
-          )}
         </ul>
 
         <Button
