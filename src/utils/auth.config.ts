@@ -1,5 +1,6 @@
 import type { AuthConfig } from "@auth/core";
 import Credentials from "@auth/core/providers/credentials";
+import { getSupabaseAuthClient } from "@/lib/supabase.server";
 
 export const authConfig: AuthConfig = {
   basePath: "/api/auth",
@@ -15,10 +16,16 @@ export const authConfig: AuthConfig = {
           return null;
         }
 
+        const { data, error } = await getSupabaseAuthClient().auth.signInWithPassword({
+          email: credentials.username as string,
+          password: credentials.password as string,
+        });
+
+        if (error || !data.session) throw new Error(error?.message || "Invalid login");
         return {
-          id: "",
-          email: "",
-          name: "",
+          id: data.user.id,
+          email: data.user.email ?? "",
+          name: (data.user.user_metadata?.name as string | undefined) ?? data.user.email ?? "",
         };
       },
     }),

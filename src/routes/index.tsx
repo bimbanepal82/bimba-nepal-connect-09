@@ -569,7 +569,7 @@ function NoticesSection() {
   const [previewDoc, setPreviewDoc] = useState<DocumentRecord | null>(null);
 
   useEffect(() => {
-    setDocuments(loadDocuments());
+    loadDocuments().then(setDocuments);
   }, []);
 
   const filteredDocuments = useMemo(() => {
