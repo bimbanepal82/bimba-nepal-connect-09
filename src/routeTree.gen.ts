@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NoticesIndexRouteImport } from './routes/notices/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as NoticesNoticeIdRouteImport } from './routes/notices/$noticeId'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as AdminUpdateBlogRouteImport } from './routes/admin/updateBlog'
 import { Route as AdminAddBlogsRouteImport } from './routes/admin/addBlogs'
@@ -28,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticesIndexRoute = NoticesIndexRouteImport.update({
+  id: '/notices/',
+  path: '/notices/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -36,6 +43,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticesNoticeIdRoute = NoticesNoticeIdRouteImport.update({
+  id: '/notices/$noticeId',
+  path: '/notices/$noticeId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
@@ -65,8 +77,10 @@ export interface FileRoutesByFullPath {
   '/admin/addBlogs': typeof AdminAddBlogsRoute
   '/admin/updateBlog': typeof AdminUpdateBlogRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/notices/$noticeId': typeof NoticesNoticeIdRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
+  '/notices/': typeof NoticesIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -75,8 +89,10 @@ export interface FileRoutesByTo {
   '/admin/addBlogs': typeof AdminAddBlogsRoute
   '/admin/updateBlog': typeof AdminUpdateBlogRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/notices/$noticeId': typeof NoticesNoticeIdRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
+  '/notices': typeof NoticesIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -86,8 +102,10 @@ export interface FileRoutesById {
   '/admin/addBlogs': typeof AdminAddBlogsRoute
   '/admin/updateBlog': typeof AdminUpdateBlogRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/notices/$noticeId': typeof NoticesNoticeIdRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
+  '/notices/': typeof NoticesIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
@@ -98,8 +116,10 @@ export interface FileRouteTypes {
     | '/admin/addBlogs'
     | '/admin/updateBlog'
     | '/blog/$slug'
+    | '/notices/$noticeId'
     | '/admin/'
     | '/blog/'
+    | '/notices/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -108,8 +128,10 @@ export interface FileRouteTypes {
     | '/admin/addBlogs'
     | '/admin/updateBlog'
     | '/blog/$slug'
+    | '/notices/$noticeId'
     | '/admin'
     | '/blog'
+    | '/notices'
     | '/api/auth/$'
   id:
     | '__root__'
@@ -118,8 +140,10 @@ export interface FileRouteTypes {
     | '/admin/addBlogs'
     | '/admin/updateBlog'
     | '/blog/$slug'
+    | '/notices/$noticeId'
     | '/admin/'
     | '/blog/'
+    | '/notices/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -129,8 +153,10 @@ export interface RootRouteChildren {
   AdminAddBlogsRoute: typeof AdminAddBlogsRoute
   AdminUpdateBlogRoute: typeof AdminUpdateBlogRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  NoticesNoticeIdRoute: typeof NoticesNoticeIdRoute
   AdminIndexRoute: typeof AdminIndexRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  NoticesIndexRoute: typeof NoticesIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -150,6 +176,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notices/': {
+      id: '/notices/'
+      path: '/notices'
+      fullPath: '/notices/'
+      preLoaderRoute: typeof NoticesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -162,6 +195,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notices/$noticeId': {
+      id: '/notices/$noticeId'
+      path: '/notices/$noticeId'
+      fullPath: '/notices/$noticeId'
+      preLoaderRoute: typeof NoticesNoticeIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/$slug': {
@@ -201,8 +241,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAddBlogsRoute: AdminAddBlogsRoute,
   AdminUpdateBlogRoute: AdminUpdateBlogRoute,
   BlogSlugRoute: BlogSlugRoute,
+  NoticesNoticeIdRoute: NoticesNoticeIdRoute,
   AdminIndexRoute: AdminIndexRoute,
   BlogIndexRoute: BlogIndexRoute,
+  NoticesIndexRoute: NoticesIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

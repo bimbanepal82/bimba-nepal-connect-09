@@ -34,6 +34,41 @@ export const listPosts = createServerFn({ method: "GET" }).handler(async (): Pro
   return data;
 });
 
+// ...existing imports/exports unchanged, add below listPosts
+
+const publicPostsInput = z.object({
+  type: z.enum(["notice", "report", "newsletter", "blog"]).optional(),
+  search: z.string().trim().max(200).optional(),
+  page: z.number().int().min(1).default(1),
+  pageSize: z.number().int().min(1).max(50).default(9),
+});
+
+export const listPublicPosts = createServerFn({ method: "GET" })
+  .inputValidator(publicPostsInput)
+  .handler(async ({ data }): Promise<{ posts: Post[]; total: number }> => {
+    const supabase = getSupabaseServerClient();
+    const from = (data.page - 1) * data.pageSize;
+    const to = from + data.pageSize - 1;
+
+    let query = supabase.from("posts").select("*", { count: "exact" }).eq("published", true);
+
+    if (data.type) query = query.eq("type", data.type);
+
+    if (data.search) {
+      const term = data.search.replace(/[%,]/g, "");
+      query = query.or(`title.ilike.%${term}%,content.ilike.%${term}%`);
+    }
+
+    const {
+      data: posts,
+      error,
+      count,
+    } = await query.order("created_at", { ascending: false }).range(from, to);
+
+    if (error) throw new Error(error.message);
+    return { posts: posts ?? [], total: count ?? 0 };
+  });
+
 export const getPostBySlug = createServerFn({ method: "GET" })
   .inputValidator(z.object({ slug: z.string() }))
   .handler(async ({ data }): Promise<Post | null> => {

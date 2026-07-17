@@ -119,7 +119,7 @@ function BlogManager() {
         id: existingPost.id,
         title: existingPost.title,
         slug: existingPost.slug,
-        type: existingPost.type ?? "blog",
+        type: existingPost.type || "blog",
         content: existingPost.content,
         cover_url: existingPost.cover_url ?? "",
         published: existingPost.published,
@@ -184,12 +184,12 @@ function BlogManager() {
       toast.error("Title is required.");
       return;
     }
-    if (isRichTextEmpty(form.content)) {
-      toast.error("Content is required.");
+    if (!form.type.trim()) {
+      toast.error("Please select a category.");
       return;
     }
-    if (!hasCover) {
-      toast.error("Cover image is required.");
+    if (isRichTextEmpty(form.content)) {
+      toast.error("Content is required.");
       return;
     }
 

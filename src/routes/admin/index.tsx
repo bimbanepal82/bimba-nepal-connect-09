@@ -237,7 +237,7 @@ function AdminRoute() {
   };
 
   const handleEditNavigate = (id: string) => {
-    navigate({ to: "/admin/addBlogs", search: { id } });
+    navigate({ to: "/admin/updateBlog", search: { id } });
   };
 
   const handleDelete = async () => {
