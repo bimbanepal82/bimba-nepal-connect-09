@@ -10,6 +10,7 @@ export interface NoticeDocument {
   fileUrl: string;
   fileType: string;
   createdAt: string;
+  slug: string;
 }
 
 export const CATEGORY_TO_DB: Record<NoticeCategory, string> = {

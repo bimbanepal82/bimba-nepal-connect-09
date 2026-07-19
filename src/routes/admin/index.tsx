@@ -218,9 +218,9 @@ function AdminRoute() {
     return counts;
   }, [posts]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     window.localStorage.removeItem("bimba_admin_authenticated");
-    logout();
+    await logout();
     navigate({ to: "/login" });
   };
 

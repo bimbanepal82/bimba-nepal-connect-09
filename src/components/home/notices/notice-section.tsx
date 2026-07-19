@@ -11,7 +11,6 @@ const CATEGORIES: NoticeFilter[] = ["All", "Notice", "Report", "Newsletter"];
 
 export function NoticesSection() {
   const { notices, loading } = useNotices();
-  console.log({ notices });
   const [selectedCategory, setSelectedCategory] = useState<NoticeFilter>("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [previewDoc, setPreviewDoc] = useState<NoticeDocument | null>(null);

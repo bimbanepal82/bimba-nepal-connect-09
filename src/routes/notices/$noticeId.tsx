@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, Calendar, Download, Eye, FileText, Image as ImageIcon } from "lucide-react";
-import { getPostById } from "@/lib/api/blog.functions";
+import { getPostBySlug } from "@/lib/api/blog.functions";
 import { NoticePreviewModal } from "@/components/home/notices/notice-preview-modal";
 import type { NoticeDocument } from "@/types/notice.type";
 import { Header } from "@/components/home/header";
@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/notices/$noticeId")({
   loader: async ({ params }) => {
-    const post = await getPostById({ data: { id: params.noticeId } });
+    const post = await getPostBySlug({ data: { slug: params.noticeId } });
     if (!post || !post.published) throw notFound();
     return post;
   },

@@ -21,7 +21,7 @@ export function NoticeCard({ doc, onPreview }: NoticeCardProps) {
   return (
     <Link
       to="/notices/$noticeId"
-      params={{ noticeId: doc.id }}
+      params={{ noticeId: doc.slug }}
       className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all shadow-[--shadow-soft] hover:shadow-sm hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       <div>

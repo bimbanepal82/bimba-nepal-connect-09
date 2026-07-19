@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase.server";
+import { requireAuth } from "@/utils/require-auth";
 
 export interface Attachment {
   name: string;
@@ -33,8 +34,6 @@ export const listPosts = createServerFn({ method: "GET" }).handler(async (): Pro
   if (error) throw new Error(error.message);
   return data;
 });
-
-// ...existing imports/exports unchanged, add below listPosts
 
 const publicPostsInput = z.object({
   type: z.enum(["notice", "report", "newsletter", "blog"]).optional(),
@@ -84,15 +83,17 @@ export const getPostBySlug = createServerFn({ method: "GET" })
 
 // --------------------------------- Admin read (drafts + published)
 
-export const listAllPosts = createServerFn({ method: "GET" }).handler(async (): Promise<Post[]> => {
-  const supabase = getSupabaseServerClient();
-  const { data, error } = await supabase
-    .from("posts")
-    .select("*")
-    .order("created_at", { ascending: false });
-  if (error) throw new Error(error.message);
-  return data;
-});
+export const listAllPosts = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
+  .handler(async (): Promise<Post[]> => {
+    const supabase = getSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return data;
+  });
 
 // --------------------------------- Create / update / delete
 
@@ -109,6 +110,7 @@ const postInput = z.object({
 });
 
 export const createPost = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
   .inputValidator(postInput)
   .handler(async ({ data }): Promise<Post> => {
     const supabase = getSupabaseServerClient();
@@ -118,6 +120,7 @@ export const createPost = createServerFn({ method: "POST" })
   });
 
 export const updatePost = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
   .inputValidator(postInput.partial().extend({ id: z.string() }))
   .handler(async ({ data }): Promise<Post> => {
     const supabase = getSupabaseServerClient();
@@ -133,6 +136,7 @@ export const updatePost = createServerFn({ method: "POST" })
   });
 
 export const deletePost = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
   .inputValidator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
     const supabase = getSupabaseServerClient();
@@ -144,6 +148,7 @@ export const deletePost = createServerFn({ method: "POST" })
 // --------------------------------- File uploads
 
 export const uploadCoverImage = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
   .validator((formData: FormData) => formData)
   .handler(async ({ data: formData }): Promise<{ url: string }> => {
     const supabase = getSupabaseServerClient();
@@ -161,6 +166,7 @@ export const uploadCoverImage = createServerFn({ method: "POST" })
   });
 
 export const uploadPostFile = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
   .validator((formData: FormData) => formData)
   .handler(async ({ data: formData }): Promise<Attachment> => {
     const supabase = getSupabaseServerClient();
@@ -176,7 +182,9 @@ export const uploadPostFile = createServerFn({ method: "POST" })
     const { data: pub } = supabase.storage.from("blog-files").getPublicUrl(path);
     return { name: file.name, url: pub.publicUrl, type: file.type || "application/octet-stream" };
   });
+
 export const getPostById = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
   .inputValidator(z.object({ id: z.string() }))
   .handler(async ({ data }): Promise<Post | null> => {
     const supabase = getSupabaseServerClient();

@@ -36,6 +36,7 @@ function mapPostToNotice(post: Post): NoticeDocument {
     fileUrl: attachment?.url ?? "",
     fileType: attachment?.type ?? "",
     createdAt: post.created_at,
+    slug: post.slug,
   };
 }
 
@@ -43,7 +44,6 @@ export const Route = createFileRoute("/notices/")({
   validateSearch: searchSchema,
   loaderDeps: ({ search }) => search,
   loader: ({ deps }) => {
-    console.log({ deps });
     return listPublicPosts({
       data: {
         type: deps.type

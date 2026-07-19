@@ -26,5 +26,6 @@ export function mapPostToNotice(post: Post): NoticeDocument | null {
     fileUrl: attachment?.url ?? "",
     fileType: attachment?.type ?? "",
     createdAt: post.created_at,
+    slug: post.slug,
   };
 }

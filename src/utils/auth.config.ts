@@ -32,6 +32,8 @@ export const authConfig: AuthConfig = {
   ],
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60 * 1, // 1 hours — total session lifetime
+    updateAge: 60 * 30, // 30 minutes — how often the JWT/cookie gets refreshed on activity
   },
   secret: process.env.AUTH_SECRET,
   trustHost: true,
@@ -45,11 +47,6 @@ export const authConfig: AuthConfig = {
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.email = token.email as string;
-        session.user.name = token.name as string;
-      }
       return session;
     },
   },
