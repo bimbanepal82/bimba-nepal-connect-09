@@ -3,6 +3,28 @@ import type { Session } from "@auth/core/types";
 import { authConfig } from "./auth.config";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
+import { getSupabaseServerClient } from "@/lib/supabase.server";
+
+// --------------------------------- Signup {email, password, name}
+
+export const signup = createServerFn({ method: "POST" })
+  .validator((formData: FormData) => {
+    const email = formData.get("email")?.toString();
+    const password = formData.get("password")?.toString();
+    const name = formData.get("name")?.toString();
+    if (!email || !password) throw new Error("Missing inputs");
+    return { email, password, name };
+  })
+  .handler(async ({ data }) => {
+    const supabase = getSupabaseServerClient();
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+      options: { data: { name: data.name } },
+    });
+    if (error) throw new Error(error.message);
+    return { success: true };
+  });
 
 // get the active session (logged in session throws - user and expires - cookie expiration time)
 
