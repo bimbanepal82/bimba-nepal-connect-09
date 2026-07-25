@@ -1827,7 +1827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lovable.dev/vite-tanstack-config@npm:^2.1.1":
+"@lovable.dev/vite-tanstack-config@npm:^2.7.7":
   version: 2.7.7
   resolution: "@lovable.dev/vite-tanstack-config@npm:2.7.7"
   dependencies:
@@ -4905,6 +4905,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"autoprefixer@npm:^10.5.4":
+  version: 10.5.4
+  resolution: "autoprefixer@npm:10.5.4"
+  dependencies:
+    browserslist: "npm:^4.28.6"
+    caniuse-lite: "npm:^1.0.30001806"
+    fraction.js: "npm:^5.3.4"
+    picocolors: "npm:^1.1.1"
+    postcss-value-parser: "npm:^4.2.0"
+  peerDependencies:
+    postcss: ^8.1.0
+  bin:
+    autoprefixer: bin/autoprefixer
+  checksum: 10c0/274ebc9fa50ac0d7a5aa9bc29baa502f2d2006f47a899dac2de4ba86c989defaa62b096e68692e15d53c9ed2b62c57dd047ceba61d344908d8b6e61f220a10e8
+  languageName: node
+  linkType: hard
+
 "babel-dead-code-elimination@npm:^1.0.12":
   version: 1.0.12
   resolution: "babel-dead-code-elimination@npm:1.0.12"
@@ -4989,7 +5006,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.24.0":
+"browserslist@npm:^4.24.0, browserslist@npm:^4.28.6":
   version: 4.28.7
   resolution: "browserslist@npm:4.28.7"
   dependencies:
@@ -5965,6 +5982,13 @@ __metadata:
   dependencies:
     fetch-blob: "npm:^3.1.2"
   checksum: 10c0/5392ec484f9ce0d5e0d52fb5a78e7486637d516179b0eb84d81389d7eccf9ca2f663079da56f761355c0a65792810e3b345dc24db9a8bbbcf24ef3c8c88570c6
+  languageName: node
+  linkType: hard
+
+"fraction.js@npm:^5.3.4":
+  version: 5.3.4
+  resolution: "fraction.js@npm:5.3.4"
+  checksum: 10c0/f90079fe9bfc665e0a07079938e8ff71115bce9462f17b32fc283f163b0540ec34dc33df8ed41bb56f028316b04361b9a9995b9ee9258617f8338e0b05c5f95a
   languageName: node
   linkType: hard
 
@@ -7305,7 +7329,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.6":
+"postcss-value-parser@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "postcss-value-parser@npm:4.2.0"
+  checksum: 10c0/f4142a4f56565f77c1831168e04e3effd9ffcc5aebaf0f538eee4b2d465adfd4b85a44257bb48418202a63806a7da7fe9f56c330aebb3cac898e46b4cbf49161
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.5.23, postcss@npm:^8.5.6":
   version: 8.5.23
   resolution: "postcss@npm:8.5.23"
   dependencies:
@@ -8276,7 +8307,7 @@ __metadata:
     "@embedpdf/react-pdf-viewer": "npm:^2.14.4"
     "@eslint/js": "npm:^9.32.0"
     "@hookform/resolvers": "npm:^5.2.2"
-    "@lovable.dev/vite-tanstack-config": "npm:^2.1.1"
+    "@lovable.dev/vite-tanstack-config": "npm:^2.7.7"
     "@radix-ui/react-accordion": "npm:^1.2.12"
     "@radix-ui/react-alert-dialog": "npm:^1.1.15"
     "@radix-ui/react-aspect-ratio": "npm:^1.1.8"
@@ -8317,6 +8348,7 @@ __metadata:
     "@types/react": "npm:^19.2.0"
     "@types/react-dom": "npm:^19.2.0"
     "@vitejs/plugin-react": "npm:^5.0.4"
+    autoprefixer: "npm:^10.5.4"
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
     cmdk: "npm:^1.1.1"
@@ -8333,6 +8365,7 @@ __metadata:
     lru-cache: "npm:11.5.1"
     lucide-react: "npm:^0.575.0"
     nitro: "npm:3.0.260603-beta"
+    postcss: "npm:^8.5.23"
     prettier: "npm:^3.7.3"
     react: "npm:^19.2.0"
     react-day-picker: "npm:^9.14.0"
@@ -8347,7 +8380,7 @@ __metadata:
     typescript: "npm:^5.8.3"
     typescript-eslint: "npm:^8.56.1"
     vaul: "npm:^1.1.2"
-    vite: "npm:^7.3.1"
+    vite: "npm:7"
     vite-tsconfig-paths: "npm:^6.0.2"
     wrangler: "npm:^4.100.0"
     zod: "npm:^3.24.2"
@@ -8744,7 +8777,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^7.3.1":
+"vite@npm:7":
   version: 7.3.6
   resolution: "vite@npm:7.3.6"
   dependencies:

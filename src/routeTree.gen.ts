@@ -9,35 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as NoticesIndexRouteImport } from './routes/notices/index'
-import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as NoticesNoticeIdRouteImport } from './routes/notices/$noticeId'
-import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
-import { Route as AdminUpdateBlogRouteImport } from './routes/admin/updateBlog'
 import { Route as AdminAddBlogsRouteImport } from './routes/admin/addBlogs'
+import { Route as AdminUpdateBlogRouteImport } from './routes/admin/updateBlog'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as NoticesIndexRouteImport } from './routes/notices/index'
+import { Route as NoticesNoticeIdRouteImport } from './routes/notices/$noticeId'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NoticesIndexRoute = NoticesIndexRouteImport.update({
-  id: '/notices/',
-  path: '/notices/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -45,14 +35,9 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NoticesNoticeIdRoute = NoticesNoticeIdRouteImport.update({
-  id: '/notices/$noticeId',
-  path: '/notices/$noticeId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
+const AdminAddBlogsRoute = AdminAddBlogsRouteImport.update({
+  id: '/admin/addBlogs',
+  path: '/admin/addBlogs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminUpdateBlogRoute = AdminUpdateBlogRouteImport.update({
@@ -60,9 +45,24 @@ const AdminUpdateBlogRoute = AdminUpdateBlogRouteImport.update({
   path: '/admin/updateBlog',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminAddBlogsRoute = AdminAddBlogsRouteImport.update({
-  id: '/admin/addBlogs',
-  path: '/admin/addBlogs',
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticesIndexRoute = NoticesIndexRouteImport.update({
+  id: '/notices/',
+  path: '/notices/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticesNoticeIdRoute = NoticesNoticeIdRouteImport.update({
+  id: '/notices/$noticeId',
+  path: '/notices/$noticeId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -162,13 +162,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -176,18 +169,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/notices/': {
-      id: '/notices/'
-      path: '/notices'
-      fullPath: '/notices/'
-      preLoaderRoute: typeof NoticesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -197,18 +183,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/notices/$noticeId': {
-      id: '/notices/$noticeId'
-      path: '/notices/$noticeId'
-      fullPath: '/notices/$noticeId'
-      preLoaderRoute: typeof NoticesNoticeIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
+    '/admin/addBlogs': {
+      id: '/admin/addBlogs'
+      path: '/admin/addBlogs'
+      fullPath: '/admin/addBlogs'
+      preLoaderRoute: typeof AdminAddBlogsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/updateBlog': {
@@ -218,11 +197,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUpdateBlogRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/addBlogs': {
-      id: '/admin/addBlogs'
-      path: '/admin/addBlogs'
-      fullPath: '/admin/addBlogs'
-      preLoaderRoute: typeof AdminAddBlogsRouteImport
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notices/': {
+      id: '/notices/'
+      path: '/notices'
+      fullPath: '/notices/'
+      preLoaderRoute: typeof NoticesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notices/$noticeId': {
+      id: '/notices/$noticeId'
+      path: '/notices/$noticeId'
+      fullPath: '/notices/$noticeId'
+      preLoaderRoute: typeof NoticesNoticeIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
