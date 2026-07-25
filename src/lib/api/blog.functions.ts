@@ -31,8 +31,11 @@ export const listPosts = createServerFn({ method: "GET" }).handler(async (): Pro
     .select("*")
     .eq("published", true)
     .order("created_at", { ascending: false });
-  if (error) throw new Error(error.message);
-  return data;
+  if (error) {
+    console.error("[listPosts] Supabase error:", error);
+    return [];
+  }
+  return data ?? [];
 });
 
 const publicPostsInput = z.object({
@@ -64,7 +67,10 @@ export const listPublicPosts = createServerFn({ method: "GET" })
       count,
     } = await query.order("created_at", { ascending: false }).range(from, to);
 
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error("[listPublicPosts] Supabase error:", error);
+      return { posts: [], total: 0 };
+    }
     return { posts: posts ?? [], total: count ?? 0 };
   });
 
@@ -91,8 +97,11 @@ export const listAllPosts = createServerFn({ method: "GET" })
       .from("posts")
       .select("*")
       .order("created_at", { ascending: false });
-    if (error) throw new Error(error.message);
-    return data;
+    if (error) {
+      console.error("[listAllPosts] Supabase error:", error);
+      return [];
+    }
+    return data ?? [];
   });
 
 // --------------------------------- Create / update / delete

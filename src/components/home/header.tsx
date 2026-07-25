@@ -2,9 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import logoAsset from "@/assets/bimba-logo.png.asset.json";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 
 const HIDE_THRESHOLD = 80;
 const HEADER_HEIGHT = 72;
+const MOBILE_BREAKPOINT = 768;
 
 export function Header() {
   const navLinks = [
@@ -21,6 +24,8 @@ export function Header() {
 
   const [isSolid, setIsSolid] = useState(false);
   const lastScrollY = useRef(0);
+
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   // Hide/show on scroll direction
   useEffect(() => {
@@ -63,12 +68,27 @@ export function Header() {
     return () => observer.disconnect();
   }, []);
 
+  // close mobile menu when the window size is greater or
+  // equal to the break point
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= MOBILE_BREAKPOINT) {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Header should render solid/white whenever the mobile sheet is open
+  const headerIsWhite = isSolid || mobileOpen;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ease-in-out ${
         visible ? "translate-y-0" : "-translate-y-full"
       } ${
-        isSolid
+        headerIsWhite
           ? "bg-white  border-b border-border/60"
           : scrolled
             ? "bg-white/5 backdrop-blur-xs shadow-sm border-b border-transparent"
@@ -103,10 +123,58 @@ export function Header() {
 
         <Button
           asChild
-          className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-warm)] transition hover:opacity-90"
+          className="hidden md:inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-warm)] transition hover:opacity-90"
         >
           <a href="#donate">Donate</a>
         </Button>
+
+        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetTrigger asChild>
+            <button
+              type="button"
+              aria-label="Open menu"
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors md:hidden ${
+                headerIsWhite ? "text-neutral-800" : "text-background"
+              }`}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-screen max-w-none sm:max-w-none flex flex-col">
+            <SheetTitle className="sr-only">Navigation menu</SheetTitle>
+            <div className="mt-4 flex items-center px-2">
+              <img src={logoAsset.url} alt="Bimba Nepal" className="h-9 w-auto" />
+            </div>
+
+            <ul className="mt-10 flex flex-col gap-1 px-2 text-base font-medium text-neutral-800">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-lg px-2 py-3 transition hover:bg-neutral-100 hover:text-primary"
+                    activeOptions={{ exact: link.href === "/" }}
+                    activeProps={{
+                      className: "text-primary",
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-2 px-2">
+                <Button
+                  asChild
+                  className="inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-warm)] transition hover:opacity-90"
+                >
+                  <a href="#donate" onClick={() => setMobileOpen(false)}>
+                    Donate
+                  </a>
+                </Button>
+              </li>
+            </ul>
+          </SheetContent>
+        </Sheet>
       </nav>
     </header>
   );

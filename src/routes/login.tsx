@@ -46,7 +46,7 @@ function LoginPageComponent() {
 
       navigate({ to: "/admin" });
     } catch (err) {
-      console.log({ err });
+      console.error({ err });
       setError("Invalid username or password. Please try again.");
       toast.error("Authentication failed.");
     } finally {
