@@ -6,8 +6,8 @@
   "compatibility_flags": ["nodejs_compat"],
 
   "vars": {
-    "VITE_SUPABASE_URL": "https://your-project.supabase.co",
-    "VITE_SUPABASE_ANON_KEY": "your_anon_key_here"
+    "VITE_SUPABASE_URL": "https://fskrbdhxrjmavoqznjax.supabase.co",
+    "VITE_SUPABASE_ANON_KEY": "sb_publishable_5d_FH_ZglOhQQkfKChj8xw_zSfCcxc7"
   },
 
   "build": {
