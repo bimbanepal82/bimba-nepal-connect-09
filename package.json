@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "NODE_OPTIONS=--max-old-space-size=4096 vite build",
-    "build:dev": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode development",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vite build",
+    "build:dev": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vite build --mode development",
     "preview": "npm run build && wrangler dev",
     "lint": "eslint .",
     "format": "prettier --write .",

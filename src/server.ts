@@ -1,7 +1,11 @@
 import "./lib/error-capture";
-
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import supabaseWorker from "./supabaseworker";
+interface Env {
+  SUPABASE_URL: string;
+  SUPABASE_ANON_KEY: string;
+}
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -49,6 +53,11 @@ export default {
         status: 500,
         headers: { "content-type": "text/html; charset=utf-8" },
       });
+    }
+  },
+  async scheduled(controller: unknown, env: Env, ctx: unknown) {
+    if (typeof supabaseWorker.scheduled === "function") {
+      return await supabaseWorker.scheduled(controller, env, ctx);
     }
   },
 };

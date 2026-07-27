@@ -1,33 +1,35 @@
 {
   "name": "bimba-nepal-connect",
-  "main": ".",
+  "main": "src/server.ts",
   "type": "javascript",
   "compatibility_date": "2024-12-01",
   "compatibility_flags": ["nodejs_compat"],
 
   "vars": {
     "VITE_SUPABASE_URL": "https://fskrbdhxrjmavoqznjax.supabase.co",
-    "VITE_SUPABASE_ANON_KEY": "sb_publishable_5d_FH_ZglOhQQkfKChj8xw_zSfCcxc7"
+    "VITE_SUPABASE_ANON_KEY": "sb_publishable_5d_FH_ZglOhQQkfKChj8xw_zSfCcxc7",
+    "SUPABASE_URL": "https://fskrbdhxrjmavoqznjax.supabase.co",
+    "SUPABASE_ANON_KEY": "sb_publishable_5d_FH_ZglOhQQkfKChj8xw_zSfCcxc7",
   },
 
   "build": {
     "command": "npm run build",
     "cwd": "./",
-    "watch_paths": ["src/**/*.ts", "src/**/*.tsx"]
+    "watch_paths": ["src/**/*.ts", "src/**/*.tsx"],
   },
 
   "routes": [
     {
       "pattern": "https://bimba.org.np/*",
-      "zone_name": "bimba.org.np"
-    }
+      "zone_name": "bimba.org.np",
+    },
   ],
 
   "triggers": {
-    "crons": []
+    "crons": ["0 0 * * *"],
   },
 
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
 }

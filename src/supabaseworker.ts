@@ -1,5 +1,10 @@
-export default {
-  async scheduled(controller, env, ctx) {
+interface Env {
+  SUPABASE_URL: string;
+  SUPABASE_ANON_KEY: string;
+}
+
+const supabaseWorker = {
+  async scheduled(controller: unknown, env: Env, ctx: unknown): Promise<void> {
     const response = await fetch(
       `${env.SUPABASE_URL}/rest/v1/users?select=id&limit=1`,
       {
@@ -7,7 +12,7 @@ export default {
           apikey: env.SUPABASE_ANON_KEY,
           Authorization: `Bearer ${env.SUPABASE_ANON_KEY}`,
         },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -18,3 +23,5 @@ export default {
     console.log("Supabase ping successful");
   },
 };
+
+export default supabaseWorker;
