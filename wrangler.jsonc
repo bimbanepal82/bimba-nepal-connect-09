@@ -1,12 +1,33 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "bimba-nepal-connect-09",
-  "compatibility_date": "2026-06-14",
+  "name": "bimba-nepal-connect",
+  "main": ".",
+  "type": "javascript",
+  "compatibility_date": "2024-12-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "vars": {
+    "VITE_SUPABASE_URL": "https://your-project.supabase.co",
+    "VITE_SUPABASE_ANON_KEY": "your_anon_key_here"
+  },
+
+  "build": {
+    "command": "npm run build",
+    "cwd": "./",
+    "watch_paths": ["src/**/*.ts", "src/**/*.tsx"]
+  },
+
+  "routes": [
+    {
+      "pattern": "https://bimba.org.np/*",
+      "zone_name": "bimba.org.np"
+    }
+  ],
+
+  "triggers": {
+    "crons": []
+  },
+
   "observability": {
     "enabled": true
-  },
-  "main": "@tanstack/react-start/server-entry",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  }
 }
