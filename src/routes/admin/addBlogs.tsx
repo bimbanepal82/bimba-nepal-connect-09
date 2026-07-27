@@ -219,7 +219,7 @@ function BlogManager() {
               <ArrowLeft className="h-4 w-4" /> Back to Admin
             </Link>
             <span className="text-border">|</span>
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+            <span className="text-sm font-semibold text-primary capitalize tracking-wider">
               Add Blog
             </span>
           </div>
@@ -238,7 +238,7 @@ function BlogManager() {
         <div className="space-y-3 rounded-lg border border-border bg-card p-6  sm:p-8 mb-8">
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
+              <p className="text-sm font-medium capitalize tracking-[0.2em] text-primary">
                 Blog Manager
               </p>
               <h1 className="mt-3 text-3xl font-semibold sm:text-4xl">Publish a new post</h1>

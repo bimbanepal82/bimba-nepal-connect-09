@@ -230,8 +230,6 @@ function AdminRoute() {
   };
 
   const handleAttachmentPreview = (post: Post) => {
-    console.log({ post: post?.attachments?.[0]?.url });
-
     setOpenAttachmentPreview(true);
     setActivePostId(post.id);
   };
@@ -268,7 +266,7 @@ function AdminRoute() {
               <ArrowLeft className="h-4 w-4" /> Home
             </Link>
             <span className="text-border">|</span>
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+            <span className="text-sm font-semibold text-primary capitalize tracking-wider">
               Admin Control Panel
             </span>
           </div>

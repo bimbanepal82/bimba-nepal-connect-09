@@ -14,7 +14,6 @@ export function useNotices() {
 
     listPosts()
       .then((posts) => {
-        console.log({ posts, active });
         if (!active) return;
         const mapped = posts
           .map(mapPostToNotice)

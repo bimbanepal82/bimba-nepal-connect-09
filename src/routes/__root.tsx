@@ -78,13 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Bimba Nepal" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
+      { name: "description", content: "Bimba Nepal connects our community with essential information, notices, reports, and support services." },
+      { name: "author", content: "Bimba Nepal" },
       { property: "og:title", content: "Bimba Nepal" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:description", content: "Bimba Nepal - Connecting our community with essential information and services." },
+      { property: "og:image", content: "https://bimba.org.np/og-image.png" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
