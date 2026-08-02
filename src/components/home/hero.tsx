@@ -14,7 +14,7 @@ export function Hero() {
       <div className="mx-auto flex min-h-[92vh] max-w-7xl flex-col justify-end px-6 pb-20 pt-40">
         <div className="max-w-2xl">
           <span className="inline-flex items-center rounded-full border border-background/10 bg-background/10 px-3 py-1 text-xs font-medium capitalize tracking-wider text-background backdrop-blur">
-            Established 2082 BS • Affiliated with Social Welfare Council
+            Established 2082 BS • Registered NGO (Reg. No. 132-082-83) • Affiliated with Social Welfare Council
           </span>
           <h1 className="mt-6 font-serif text-5xl font-semibold leading-[1.05] text-background sm:text-6xl md:text-7xl">
             Advancing community health in Nepal.
