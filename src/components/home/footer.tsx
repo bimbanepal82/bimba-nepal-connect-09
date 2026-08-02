@@ -25,8 +25,8 @@ export function Footer() {
           </a>
         </div>
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Bimba Nepal • Registered NGO • Affiliated with Social Welfare
-          Council
+          © {new Date().getFullYear()} Bimba Nepal • Registered NGO (Reg. No. 132-082-83) • Affiliated
+          with Social Welfare Council
         </p>
       </div>
     </footer>

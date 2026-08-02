@@ -62,6 +62,12 @@ export const Route = createFileRoute("/notices/")({
         name: "description",
         content: "Official notices, project reports, and newsletter updates from Bimba Nepal.",
       },
+      { property: "og:title", content: "Notice Board & Documents | Bimba Nepal" },
+      {
+        property: "og:description",
+        content:
+          "Official notices, project reports, and newsletter updates from Bimba Nepal — connecting our community with essential information and support (Reg. No. 132-082-83).",
+      },
     ],
   }),
   component: NoticesListRoute,

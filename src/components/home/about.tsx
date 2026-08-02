@@ -12,10 +12,10 @@ export function About() {
         </div>
         <div className="md:col-span-6 md:col-start-7 space-y-5 text-lg leading-relaxed text-muted-foreground">
           <p>
-            Bimba Nepal is a non-profit organization registered in Nepal and affiliated with the
-            Social Welfare Council. We are committed to improving the health and well-being of
-            communities through preventive healthcare, health education, early detection, community
-            outreach, and access to appropriate support services.
+            Bimba Nepal is a non-profit organization registered in Nepal (Reg. No. 132-082-83) and
+            affiliated with the Social Welfare Council. We are committed to improving the health and
+            well-being of communities through preventive healthcare, health education, early
+            detection, community outreach, and access to appropriate support services.
           </p>
           <p>
             Our work brings together expertise in Geriatrics, Gynecology, Radiology, Mental Health,
